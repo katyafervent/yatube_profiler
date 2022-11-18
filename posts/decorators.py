@@ -1,25 +1,26 @@
 import collections
 import decimal
+import functools
 import time
 from typing import Any, Callable, Optional
 
 from django.core.management import BaseCommand
-from django.db import reset_queries, connection
+from django.db import connection, reset_queries
 
 
 def show_time(func: Callable) -> Callable:
-
+    @functools.wraps(func)
     def wrapper(*args, **kwargs) -> Any:
         _self: BaseCommand = args[0]
         start_time = time.time()
         result = func(*args, **kwargs)
-        message = f'Время выполнения функции {func.__name__}: {time.time() - start_time}'
+        diff = time.time() - start_time
+        message = (f'Время выполнения функции {func.__name__}: {diff:.3f}')
         if isinstance(_self, BaseCommand):
             _self.stdout.write(message)
         else:
             print(message)
         return result
-
     return wrapper
 
 

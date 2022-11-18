@@ -1,11 +1,11 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 
 User = get_user_model()
 
 
 class Group(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, null=True, blank=True)
     slug = models.SlugField(max_length=50, unique=True)
     description = models.TextField()
 
@@ -15,6 +15,11 @@ class Group(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.title:
+            self.title = self.slug
+        super().save()
 
 
 class Post(models.Model):
@@ -56,6 +61,7 @@ class Post(models.Model):
 
     def __str__(self) -> str:
         return self.text[:15]
+
 
 
 class Comment(models.Model):

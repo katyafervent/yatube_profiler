@@ -7,12 +7,15 @@ from django.contrib.auth.hashers import make_password
 from django.core.management import BaseCommand
 
 from posts.decorators import show_time
-from posts.models import Group, User, Post, Comment, Follow
+from posts.models import Comment, Follow, Group, Post, User
 
 
 class Command(BaseCommand):
     def add_arguments(self, parser: ArgumentParser) -> None:
-        parser.add_argument('--use_bulk', action='store_true', help='Использовать пакетное создание')
+        parser.add_argument(
+            '--use_bulk',
+            action='store_true',
+            help='Использовать пакетное создание')
         parser.add_argument(
             '--amount',
             type=int,

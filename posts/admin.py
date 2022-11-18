@@ -1,14 +1,12 @@
 import time
-
-from django.contrib import admin
-
 from functools import lru_cache
 
+from django.contrib import admin
 from django.db.models import QuerySet
 from django.http import HttpRequest
 
 from posts.decorators import admin_field, show_time
-from posts.models import Group, Post, Comment, Follow
+from posts.models import Comment, Follow, Group, Post
 
 
 @admin.register(Post)
@@ -24,13 +22,13 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ('text',)
     list_filter = ('pub_date',)
     empty_value_display = '-пусто-'
-    list_per_page = 100
+    list_per_page = 1000
 
     def get_queryset(self, request: HttpRequest) -> QuerySet:
         qs: QuerySet = super().get_queryset(request)
         # qs = qs.select_related('author', 'group')
         qs = qs.prefetch_related('author', 'group')
-        print(qs.query)
+        # print(qs.query)
 
         return qs
 

@@ -46,11 +46,13 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+     # защита от csrf
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+     # показывает сообщения в админке
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'django_cprofile_middleware.middleware.ProfilerMiddleware',
-    'mysite.middleware.StatsMiddleware',
+     # защита от clickjacking. 
+     'mysite.middleware.StatsMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'

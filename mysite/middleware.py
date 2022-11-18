@@ -6,6 +6,8 @@ from posts.decorators import queries_stat
 
 
 class StatsMiddleware:
+    """Timestamps the entire request
+    """
     def __init__(self, get_response):
         self.get_response = queries_stat(get_response)
 
