@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:12-alpine
+    container_name: postgres_for_workshop
+    shm_size: 256m
+    restart: always
+    environment:
+      POSTGRES_USER: workshop
+      POSTGRES_DB: workshop
+      POSTGRES_PASSWORD: workshop
+      PGDATA: /var/lib/postgresql/data/db-files/
+    ports:
+      - 54324:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6-alpine
+    container_name: redis_for_workshop
+    restart: always
+    ports:
+      - 63794:6379
+
+volumes:
+  pgdata:
